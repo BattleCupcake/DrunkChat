@@ -1,9 +1,10 @@
-package com.example.drunkchat
+package com.example.drunkchat.Controller
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.example.drunkchat.R
 
 class LoginActivity : AppCompatActivity() {
 
