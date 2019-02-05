@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.drunkchat.R
 import com.example.drunkchat.Services.AuthService
+import com.example.drunkchat.Services.UserDataServices
 import kotlinx.android.synthetic.main.activity_create_user.*
 import java.util.*
 
@@ -49,14 +50,21 @@ class CreateUserActivity : AppCompatActivity() {
     }
 
     fun createUserClicked(view: View){
+        val userName = createUserNameTxt.text.toString()
         val email = createEmailText.text.toString()
         val password = createPasswordText.text.toString()
         AuthService.registerUser(this, email, password) {registerSuccsess ->
             if(registerSuccsess){
                 AuthService.loginUser(this, email, password) {loginSuccsess ->
                     if (loginSuccsess){
-                        println(AuthService.authToken)
-                        println(AuthService.userEmail)
+                        AuthService.createUser(this, userName, email, userAvatar, avatarColor){ createSuccess ->
+                            if (createSuccess){
+                                println(UserDataServices.avatarColor)
+                                println(UserDataServices.avatarName)
+                                println(UserDataServices.name)
+                                finish()
+                            }
+                        }
                     }
                 }
             }
