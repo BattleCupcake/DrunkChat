@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.example.drunkchat.R
 import com.example.drunkchat.Services.AuthService
 import com.example.drunkchat.Services.UserDataServices
@@ -18,6 +19,7 @@ class CreateUserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_user)
+        createSpinner.visibility = View.INVISIBLE
     }
 
     fun generateUserAvatar(view: View){
@@ -50,6 +52,7 @@ class CreateUserActivity : AppCompatActivity() {
     }
 
     fun createUserClicked(view: View){
+        enableSpinner(true)
         val userName = createUserNameTxt.text.toString()
         val email = createEmailText.text.toString()
         val password = createPasswordText.text.toString()
@@ -59,15 +62,35 @@ class CreateUserActivity : AppCompatActivity() {
                     if (loginSuccsess){
                         AuthService.createUser(this, userName, email, userAvatar, avatarColor){ createSuccess ->
                             if (createSuccess){
-                                println(UserDataServices.avatarColor)
-                                println(UserDataServices.avatarName)
-                                println(UserDataServices.name)
+
+                                enableSpinner(false)
                                 finish()
+                            } else {
+                                errorToast()
                             }
                         }
+                    } else {
+                        errorToast()
                     }
                 }
+            } else {
+                errorToast()
             }
         }
+    }
+    fun errorToast(){
+        Toast.makeText(this, "Something went wrong, please try again",
+                        Toast.LENGTH_SHORT).show()
+        enableSpinner(false)
+    }
+    fun enableSpinner(enable: Boolean) {
+        if (enable){
+            createSpinner.visibility = View.VISIBLE
+        } else {
+            createSpinner.visibility = View.INVISIBLE
+        }
+        createUserBtn.isEnabled = !enable
+        createAvatarImageView.isEnabled = !enable
+        backgroundColorBtn.isEnabled = !enable
     }
 }
