@@ -29,9 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
-        )
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -65,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     fun loginBtnNavClicked(view: View){
         if (AuthService.isLoggedIn) {
             UserDataServices.logout()
-            userNameNavHeader.text = "Login"
+            userNameNavHeader.text = ""
             userEmailNavHeader.text = ""
             userImageNavHeader.setImageResource(R.drawable.profiledefault)
             userImageNavHeader.setBackgroundColor(Color.TRANSPARENT)
